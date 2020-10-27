@@ -1,1 +1,1 @@
-# -SimpleSurvey-Cucumber
+# SimpleSurvey-Cucumber

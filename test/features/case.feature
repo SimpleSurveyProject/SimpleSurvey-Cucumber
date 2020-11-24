@@ -6,3 +6,4 @@ Background:
 Scenario: correct content is delivered
  When user visits site
  Then hello-world is shown
+ And browser will closed

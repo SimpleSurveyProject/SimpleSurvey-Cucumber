@@ -12,8 +12,4 @@ import io.cucumber.junit.CucumberOptions;
 @CucumberOptions(features = "test/features", glue = "")
 public class TestRunner {
 
-	public static void init() {
-		System.setProperty("webdriver.chrome.driver", FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\chromedriver.exe");
-	}
-
 }

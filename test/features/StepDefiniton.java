@@ -1,7 +1,5 @@
 package features;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 import java.util.concurrent.TimeUnit;
@@ -13,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.cucumber.java.After;
@@ -31,7 +31,7 @@ public class StepDefiniton {
 		System.setProperty("webdriver.chrome.driver", FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\chromedriver.exe");
 		driver = new ChromeDriver();
 		actions = new Actions(driver);
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, 30);
 	}
 
 	@When("user visits {string}")
@@ -41,25 +41,32 @@ public class StepDefiniton {
 
 	@Then("{string} is shown")
 	public void text_is_shown(String string) {
-		assertThat(string, containsString(string));
+		wait.until(new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver d) {
+				return driver.getPageSource().contains(string);
+			}
+		});
 	}
 
 	@Then("click {string}")
-	public void click(String string) {
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		wait.until(presenceOfElementLocated(By.xpath(string)));
+	public void click(String xpath) {
+		By by = By.xpath(xpath);
 
-		WebElement element = driver.findElement(By.xpath(string));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+		wait.until(presenceOfElementLocated(by));
+
+		WebElement element = driver.findElement(by);
 		actions.moveToElement(element).perform();
 		actions.moveToElement(element).click().perform();
 	}
 
 	@Then("fill {string} {string}")
 	public void fill(String xpath, String content) {
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		wait.until(presenceOfElementLocated(By.xpath(xpath)));
+		By by = By.xpath(xpath);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+		wait.until(presenceOfElementLocated(by));
 
-		driver.findElement(By.xpath(xpath)).sendKeys(content);
+		driver.findElement(by).sendKeys(content);
 	}
 
 	@After()

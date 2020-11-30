@@ -5,4 +5,4 @@ Feature: Example
 
   Scenario: correct content is delivered
     When user visits "http://simplesurvey.de/"
-    Then "test" is shown
+    Then "SimpleSurvey" is shown

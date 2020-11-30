@@ -1,9 +1,8 @@
 Feature: Example
 
   Background: 
-    Given can reach website
+    Given browser open
 
   Scenario: correct content is delivered
-    When user visits "http://direct.simonlabs.de/ping"
-    Then "pong" is shown
-    Then close site
+    When user visits "http://simplesurvey.de/"
+    Then "test" is shown

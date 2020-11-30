@@ -15,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -25,7 +26,7 @@ public class StepDefiniton {
 	private Actions actions;
 	private WebDriverWait wait;
 
-	@Given("can reach website")
+	@Given("browser open")
 	public void can_reach_website() {
 		System.setProperty("webdriver.chrome.driver", FileSystemView.getFileSystemView().getDefaultDirectory().getPath() + "\\chromedriver.exe");
 		driver = new ChromeDriver();
@@ -43,16 +44,11 @@ public class StepDefiniton {
 		assertThat(string, containsString(string));
 	}
 
-	@Then("close site")
-	public void close_site() {
-		driver.close();
-	}
-
 	@Then("click {string}")
 	public void click(String string) {
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		wait.until(presenceOfElementLocated(By.xpath(string)));
-		
+
 		WebElement element = driver.findElement(By.xpath(string));
 		actions.moveToElement(element).perform();
 		actions.moveToElement(element).click().perform();
@@ -62,8 +58,13 @@ public class StepDefiniton {
 	public void fill(String xpath, String content) {
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		wait.until(presenceOfElementLocated(By.xpath(xpath)));
-		
+
 		driver.findElement(By.xpath(xpath)).sendKeys(content);
+	}
+
+	@After()
+	public void closeBrowser() {
+		driver.quit();
 	}
 
 }

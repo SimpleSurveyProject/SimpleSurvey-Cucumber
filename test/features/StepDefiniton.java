@@ -2,8 +2,6 @@ package features;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.filechooser.FileSystemView;
 
 import org.openqa.selenium.By;

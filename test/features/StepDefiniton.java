@@ -2,6 +2,8 @@ package features;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.filechooser.FileSystemView;
 
 import org.openqa.selenium.By;
@@ -32,6 +34,17 @@ public class StepDefiniton {
 		wait = new WebDriverWait(driver, 30);
 	}
 
+	@Given("user logged in")
+	public void user_logged_in() {
+		user_visits_site("http://simplesurvey.de/");
+		click("Login");
+		fill("//*[@id=\"mat-input-0\"]", "testaccount");
+		click("Next");
+		fill("//*[@id=\"mat-input-1\"]", "testpassword");
+		click("Submit");
+		text_is_shown("Dashboard");
+	}
+
 	@When("user visits {string}")
 	public void user_visits_site(String site) {
 		driver.get(site);
@@ -56,6 +69,27 @@ public class StepDefiniton {
 		WebElement element = driver.findElement(by);
 		actions.moveToElement(element).perform();
 		actions.moveToElement(element).click().perform();
+	}
+
+	@Then("click xpath {string}")
+	public void click_xpath(String xpath) {
+		By by = By.xpath(xpath);
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+		wait.until(presenceOfElementLocated(by));
+
+		WebElement element = driver.findElement(by);
+		actions.moveToElement(element).perform();
+		actions.moveToElement(element).click().perform();
+	}
+
+	@Then("wait {int} seconds")
+	public void wait(int time) {
+		try {
+			Thread.sleep(time * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Then("fill {string} {string}")

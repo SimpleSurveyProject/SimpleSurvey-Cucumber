@@ -47,8 +47,8 @@ public class StepDefiniton {
 	}
 
 	@Then("click {string}")
-	public void click(String xpath) {
-		By by = By.xpath(xpath);
+	public void click(String text) {
+		By by = By.xpath("//span[contains(., '" + text + "')]");
 
 		wait.until(ExpectedConditions.visibilityOfElementLocated(by));
 		wait.until(presenceOfElementLocated(by));

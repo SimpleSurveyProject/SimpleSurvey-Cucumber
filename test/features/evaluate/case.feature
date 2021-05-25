@@ -7,6 +7,6 @@ Feature: Evaluate
   Scenario: evaluate survey is working
     When click "Dashboard"
     Then click xpath "//*[@id=\"mat-expansion-panel-header-0\"]"
-    Then click "Show answers"
-    Then click xpath "/html/body/app-root/app-fillout/div/mat-accordion/mat-expansion-panel"
+    Then click xpath "//*[@id=\"cdk-accordion-child-0\"]/div/button[1]/span/mat-icon"
+    Then "Test_Question" is shown
 		

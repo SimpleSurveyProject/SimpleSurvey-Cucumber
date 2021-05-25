@@ -39,7 +39,6 @@ public class StepDefiniton {
 		user_visits_site("http://simplesurvey.de/");
 		click("Login");
 		fill("//*[@id=\"mat-input-0\"]", "testaccount");
-		click("Next");
 		fill("//*[@id=\"mat-input-1\"]", "testpassword");
 		click("Submit");
 		text_is_shown("Dashboard");
